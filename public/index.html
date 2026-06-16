@@ -36,7 +36,7 @@ document.getElementById("form").addEventListener("submit", async function(e){
 
     const data = Object.fromEntries(new FormData(this));
 
-        const res = await fetch("profile-app-form-production.up.railway.app/submit", {
+        const res = await fetch("https://profile-app-form-production.up.railway.app/submit", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
