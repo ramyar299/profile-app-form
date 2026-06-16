@@ -4,36 +4,37 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// serve frontend
 app.use(express.static(path.join(__dirname, "public")));
 
-// store data (temporary)
-let submissions = [];
+// ✅ ROOT ROUTE (VERY IMPORTANT)
+app.get("/", (req, res) => {
+    res.send("Server is running 🚀");
+});
 
-// receive form data
+// form submit
 app.post("/submit", (req, res) => {
-    const data = req.body;
+    try {
+        const data = req.body;
 
-    console.log("New Data:", data);
+        console.log("NEW SUBMISSION:");
+        console.log(JSON.stringify(data, null, 2));
 
-    submissions.push(data);
+        res.json({ success: true, message: "Data saved!" });
 
-    res.json({
-        success: true,
-        message: "Data saved successfully!"
-    });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error");
+    }
 });
 
-// view all data
+// test route
 app.get("/data", (req, res) => {
-    res.json(submissions);
+    res.json({ status: "OK" });
 });
 
-// start server
 app.listen(PORT, () => {
     console.log("Server running on port " + PORT);
 });
