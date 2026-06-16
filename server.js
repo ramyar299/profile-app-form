@@ -4,37 +4,50 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// serve frontend
 app.use(express.static(path.join(__dirname, "public")));
 
-// ✅ ROOT ROUTE (VERY IMPORTANT)
+// health check (Railway uses this sometimes)
 app.get("/", (req, res) => {
-    res.send("Server is running 🚀");
+    res.status(200).send("Server is running 🚀");
 });
 
-// form submit
+// submit form
 app.post("/submit", (req, res) => {
     try {
         const data = req.body;
 
         console.log("NEW SUBMISSION:");
-        console.log(JSON.stringify(data, null, 2));
+        console.log(data); // cleaner than JSON.stringify
 
-        res.json({ success: true, message: "Data saved!" });
+        return res.status(200).json({
+            success: true,
+            message: "Data received successfully"
+        });
 
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Error");
+    } catch (error) {
+        console.error("ERROR:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
 });
 
-// test route
+// view data test route
 app.get("/data", (req, res) => {
-    res.json({ status: "OK" });
+    res.status(200).json({
+        status: "OK",
+        message: "API is working"
+    });
 });
 
+// start server
 app.listen(PORT, () => {
-    console.log("Server running on port " + PORT);
+    console.log(`Server running on port ${PORT}`);
 });
