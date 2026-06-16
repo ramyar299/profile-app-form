@@ -29,7 +29,7 @@ app.post("/submit", (req, res) => {
 });
 
 // view all data
-app.get("https://profile-app-form-production.up.railway.app/data", (req, res) => {
+app.get("/data", (req, res) => {
     res.json(submissions);
 });
 
