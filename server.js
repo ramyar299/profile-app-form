@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, "public")));
 let submissions = [];
 
 // receive form data
-app.post("https://profile-app-form-production.up.railway.app/submit", (req, res) => {
+app.post("/submit", (req, res) => {
     const data = req.body;
 
     console.log("New Data:", data);
