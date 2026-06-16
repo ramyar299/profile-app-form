@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pro App Form</title>
+</head>
+<body>
+
+<h2>Pro App - User Info</h2>
+
+<form id="form">
+
+<input name="name" placeholder="Name" required><br><br>
+<input name="height" placeholder="Height" required><br><br>
+<input name="weight" placeholder="Weight" required><br><br>
+<input name="eyeColor" placeholder="Eye Color" required><br><br>
+<input name="skinColor" placeholder="Skin Color" required><br><br>
+<input name="job" placeholder="Job" required><br><br>
+<input name="jobPlace" placeholder="Job Place" required><br><br>
+<input name="instagram" placeholder="Instagram" required><br><br>
+
+<input name="age" placeholder="Age" required><br><br>
+<input name="country" placeholder="Country" required><br><br>
+<input name="city" placeholder="City" required><br><br>
+<input name="hobby" placeholder="Hobby" required><br><br>
+<input name="favoriteFood" placeholder="Favorite Food" required><br><br>
+<input name="phone" placeholder="Phone" required><br><br>
+<input name="email" placeholder="Email" required><br><br>
+
+<button type="submit">Send</button>
+
+</form>
+
+<script>
+document.getElementById("form").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(this));
+
+    const res = await fetch("/submit", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+    alert(result.message);
+});
+</script>
+
+</body>
+</html>
